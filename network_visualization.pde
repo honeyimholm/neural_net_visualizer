@@ -9,6 +9,7 @@ int i=0;
 int init_error_bar = 0;
 String lines[];
 String init_error=""; //default initial error
+
 void setup() {
   size(780,360);
   lines = loadStrings("weights.txt");
@@ -16,8 +17,9 @@ void setup() {
   location2 = new PVector(100,250);
   location3 = new PVector(300,100);
   location4 = new PVector(300,250);
-  location5 = new PVector(500,100);
-  location6 = new PVector(500,250);
+  location5 = new PVector(500,175);
+  //delay of 5 seconds to give time for video capture setup
+  delay(5000);
 }
 
 void draw() {
@@ -33,7 +35,6 @@ void draw() {
   ellipse(location3.x,location3.y,48,48);
   ellipse(location4.x,location4.y,48,48);
   ellipse(location5.x,location5.y,48,48);
-  ellipse(location6.x,location6.y,48,48);
   //if(i<100){return;}
   //now set up the weight arrays
   String[] weights_s = split(lines[i], " ");
@@ -67,7 +68,7 @@ void draw() {
     textSize(15);
     fill(255);
     text(init_error,600,init_error_bar-5);
-    text(weights_s[weights_s.length-1],670,250-24);
+    text(weights_s[weights_s.length-1],670,250);
   }
   //now we set the scale for the visualization
   float max_w = max(max(weights_f),abs(min(weights_f)));
@@ -138,31 +139,9 @@ void draw() {
     stroke(0,255,0);
   }
   strokeWeight(stroke_weight);
-  line(location3.x,location3.y, location6.x,location6.y);
-  stroke_weight=int(weights_f[6]/max_w*max_stroke_weight);
-  if(stroke_weight<0)
-  {
-    stroke_weight = abs(stroke_weight);
-    stroke(255,0,0);
-  }
-  else{
-    stroke(0,255,0);
-  }
-  strokeWeight(stroke_weight);
   line(location4.x,location4.y, location5.x,location5.y);
-  stroke_weight=int(weights_f[7]/max_w*max_stroke_weight);
-  if(stroke_weight<0)
-  {
-    stroke_weight = abs(stroke_weight);
-    stroke(255,0,0);
-  }
-  else{
-    stroke(0,255,0);
-  }
-  strokeWeight(stroke_weight);
-  line(location4.x,location4.y, location6.x,location6.y);
   i++;
-  delay(100);
+  delay(1);
   }
   else{print("DONE!");
     delay(10000);}
